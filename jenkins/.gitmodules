@@ -1,0 +1,6 @@
+[submodule "artest/regression-script"]
+	path = artest/regression-script
+	url = https://stash.force10networks.com/scm/art/regscript.git
+[submodule "artest/reg-lib"]
+	path = artest/reg-lib
+	url = https://msanthanam@stash.force10networks.com/scm/art/reglib.git

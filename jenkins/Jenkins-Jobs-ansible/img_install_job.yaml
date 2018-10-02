@@ -1,0 +1,29 @@
+- job-template:
+    builders:
+    - opx-test:
+        extraVars: image=xx.bin
+        hostsPath: /etc/ansible/opx-test/hosts
+        playbookPath: /etc/ansible/playbook/site.yml
+        tags: img_install
+    concurrent: true
+    name: img_install
+    publishers:
+    - post-ws-clean
+    - email-ext:
+        always: true
+        attach-build-log: false
+        body: $DEFAULT_CONTENT
+        content-type: html
+        failure: false
+        recipients: tgoel@force10networks.com
+    - raw:
+        xml: "<hudson.tasks.BuildTrigger> \n  <childProjects>foo</childProjects> \n\
+          \  <threshold> \n    <name>SUCCESS</name> \n    <ordinal>0</ordinal>  \n\
+          \    <completeBuild>true</completeBuild> \n  </threshold> \n</hudson.tasks.BuildTrigger>\n"
+    wrappers:
+    - build-timeout:
+        timeout: 120
+- project:
+    jobs:
+    - img_install
+    name: img_install
